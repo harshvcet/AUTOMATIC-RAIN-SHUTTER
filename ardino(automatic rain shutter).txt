@@ -1,0 +1,55 @@
+
+int val = 0 ;  
+int chk_value = 0;
+int previous_value = 0;
+bool run_if = true;
+ void setup()  
+ {  
+  Serial.begin(9600);  
+  pinMode(4,INPUT); // rain sensor output pin connected  
+  pinMode(6,OUTPUT); // motor  
+  pinMode(7,OUTPUT); // motor  
+  pinMode(3,OUTPUT); // LED  
+  pinMode(5,OUTPUT); // BUZZER 
+ }  
+ void loop()   
+ {  
+  val = digitalRead(4); // rain sensor output pin connected  
+  Serial.println(val); // see the value in serial mpnitor in Arduino IDE  
+  delay(4);  
+
+  if(previous_value!=val && chk_value==1){
+    run_if = true;
+    }
+  
+  if(val == 1 && run_if==true)  
+  {  
+  digitalWrite(7,HIGH);  
+  digitalWrite(6,LOW);    
+
+  delay(19000);
+
+  digitalWrite(7,LOW);  
+  digitalWrite(6,LOW);
+
+   chk_value = 1;
+   run_if=false;
+  }  
+  else if(val==0 && run_if==true)
+  {  
+   digitalWrite(7,LOW);  
+   digitalWrite(6,HIGH);  
+   digitalWrite(3,HIGH);
+   digitalWrite(5,HIGH);  
+
+  delay(19000);
+
+  digitalWrite(3,LOW);
+  digitalWrite(5,LOW); 
+
+   chk_value = 1;
+   run_if=false;
+  }  
+
+  previous_value=val;
+  }
